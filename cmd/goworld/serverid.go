@@ -11,9 +11,17 @@ type ServerID string
 
 // Path returns the path to the server
 func (sid ServerID) Path() string {
+	//serverPath := strings.Split(string(sid), "/")
+	//serverPath = append([]string{env.GoWorldRoot}, serverPath...)
+	//return filepath.Join(serverPath...)
+
 	serverPath := strings.Split(string(sid), "/")
-	serverPath = append([]string{env.GoWorldRoot}, serverPath...)
-	return filepath.Join(serverPath...)
+	rPath := filepath.Join(serverPath...)
+	if ret, err := filepath.Abs(rPath); err == nil {
+		return ret
+	}
+
+	return rPath
 }
 
 // Name returns the name of the server
